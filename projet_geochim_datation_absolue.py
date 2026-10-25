@@ -59,8 +59,7 @@ with st.expander("Comment ça marche ?"):
     Si les points ne s'alignent pas bien, la roche a peut-être été perturbée
     (métamorphisme, altération).
     """)
-with st.expander("Comment ca marche ?"):
-    st.write("")
+
 # Tableau de départ (exemple), modifiable par l'utilisateur
 def exemple():
     return pd.DataFrame({

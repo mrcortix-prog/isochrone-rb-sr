@@ -69,15 +69,15 @@ with col_tableau:
     )
 
     c1, c2, c3 = st.columns(3)
-    if c1.button("➕ Ajouter"):
-        nouvelle = pd.DataFrame({"Suppr.": [False], "87Rb/86Sr": [np.nan], "87Sr/86Sr": [np.nan]})
-        st.session_state.data = pd.concat([edited, nouvelle], ignore_index=True)
-        st.session_state.version += 1
-        st.rerun()
-    if c2.button("❌ Supprimer cochées"):
+    if c1.button("❌ Supprimer cochées"):
         st.session_state.data = edited[~edited["Suppr."]].reset_index(drop=True)
         st.session_state.version += 1
         st.rerun()
+    if c2.button("➕ Ajouter"):
+            nouvelle = pd.DataFrame({"Suppr.": [False], "87Rb/86Sr": [np.nan], "87Sr/86Sr": [np.nan]})
+            st.session_state.data = pd.concat([edited, nouvelle], ignore_index=True)
+            st.session_state.version += 1
+            st.rerun()
     if c3.button("🗑️ Tout vider"):
         st.session_state.data = edited.iloc[0:0]
         st.session_state.version += 1

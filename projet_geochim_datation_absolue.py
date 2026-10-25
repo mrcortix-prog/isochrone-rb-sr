@@ -1,0 +1,80 @@
+"""import matplotlib.pyplot as plt
+import numpy as np
+
+rapport_Rb_Sr = [2.24, 3.642, 6.59, 0.2313, 3.628] #axe horizontal
+rapport_Sr_Sr = [0.738, 0.7612, 0.7992, 0.7074, 0.7573] #axe vertical
+
+Lambda = 1.42e-11 #constante de désintégration du Rb87 en Sr87
+
+A, B = np.polyfit(rapport_Rb_Sr, rapport_Sr_Sr, 1) #calcul de la pente et de l'ordonnée à l'origine de la droite de régression
+t = (np.log(1 + A) / Lambda) #calcul du temps grace a la pente et au lambda
+y_reg = A * np.array(rapport_Rb_Sr) + B #calcul des valeurs de y pour la droite de régression
+
+plt.scatter(rapport_Rb_Sr, rapport_Sr_Sr, marker='o', label='Données expérimentales') #affichage des points expérimentaux
+plt.plot(rapport_Rb_Sr, y_reg, '-', label='Droite de régression') #affichage de la droite de régression
+plt.text(0.05, 0.95, f"y = {A:.5f}x + {B:.4f}\n Âge = {t/1e9:.2f} Ga", transform=plt.gca().transAxes, verticalalignment="top")
+plt.xlabel("Rapport 87Rb/86Sr")
+plt.ylabel("Rapport 87Sr/86Sr")
+plt.title("Datation absolue par droite de isochrone Rb-Sr")
+plt.grid(False)
+plt.show()"""
+
+import streamlit as st
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+st.title("Datation absolue par isochrone Rb-Sr")
+
+Lambda = 1.42e-11  # constante de désintégration du Rb87 en Sr87 (an^-1)
+
+st.write(
+    "Modifie les valeurs du tableau, ajoute ou supprime des lignes "
+    "(un échantillon par ligne) : le graphique et l'âge se mettent à jour."
+)
+
+# Tableau de départ (exemple), modifiable par l'utilisateur
+df0 = pd.DataFrame({
+    "87Rb/86Sr": [2.24, 3.642, 6.59, 0.2313, 3.628],  # axe horizontal
+    "87Sr/86Sr": [0.738, 0.7612, 0.7992, 0.7074, 0.7573],  # axe vertical
+})
+df = st.data_editor(df0, num_rows="dynamic")
+
+# Garde-fous : on ignore les lignes incomplètes et on exige au moins 2 points
+df = df.dropna()
+if len(df) < 2:
+    st.info("Ajoute au moins 2 points pour tracer l'isochrone.")
+    st.stop()
+
+rapport_Rb_Sr = df["87Rb/86Sr"].to_numpy()
+rapport_Sr_Sr = df["87Sr/86Sr"].to_numpy()
+
+# Calculs (identiques à ton script)
+A, B = np.polyfit(rapport_Rb_Sr, rapport_Sr_Sr, 1)  # pente et ordonnée à l'origine
+if A <= 0:
+    st.warning("La pente est négative ou nulle : vérifie tes données, l'âge n'a pas de sens.")
+    st.stop()
+t = np.log(1 + A) / Lambda  # âge en années
+
+# Résultats
+col1, col2, col3 = st.columns(3)
+col1.metric("Pente", f"{A:.5f}")
+col2.metric("⁸⁷Sr/⁸⁶Sr initial", f"{B:.4f}")
+col3.metric("Âge", f"{t / 1e9:.2f} Ga")
+
+# Graphique
+fig, ax = plt.subplots()
+ax.scatter(rapport_Rb_Sr, rapport_Sr_Sr, marker="o", label="Données expérimentales")
+xs = np.linspace(min(rapport_Rb_Sr), max(rapport_Rb_Sr), 100)
+ax.plot(xs, A * xs + B, "-", label="Droite de régression")
+ax.text(
+    0.05, 0.95,
+    f"y = {A:.5f}x + {B:.4f}\nÂge = {t / 1e9:.2f} Ga",
+    transform=ax.transAxes,
+    verticalalignment="top",
+)
+ax.set_xlabel("Rapport 87Rb/86Sr")
+ax.set_ylabel("Rapport 87Sr/86Sr")
+ax.set_title("Datation absolue par droite isochrone Rb-Sr")
+ax.legend(loc="lower right")
+st.pyplot(fig)

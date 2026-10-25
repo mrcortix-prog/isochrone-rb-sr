@@ -89,7 +89,8 @@ if len(df) < 2:
     st.info("Ajoute au moins 2 points pour tracer l'isochrone.")
     st.stop()
 
-nom_echantillon = ["Nom de l'échantillon"]
+df = edited[["nom_echantillon", "87Rb/86Sr", "87Sr/86Sr"]]
+df = df.dropna(subset=["87Rb/86Sr", "87Sr/86Sr"])
 rapport_Rb_Sr = df["87Rb/86Sr"].to_numpy()
 rapport_Sr_Sr = df["87Sr/86Sr"].to_numpy()
 
@@ -109,6 +110,15 @@ col3.metric("Âge", formater_age(t))
 # Graphique
 fig, ax = plt.subplots()
 ax.scatter(rapport_Rb_Sr, rapport_Sr_Sr, marker="o", label="Données expérimentales")
+for x, y, nom in zip(df["87Rb/86Sr"], df["87Sr/86Sr"], df["nom_echantillon"]):
+    if pd.notna(nom) and str(nom).strip():
+        ax.annotate(
+            str(nom),
+            (x, y),
+            xytext=(5, 5),
+            textcoords="offset points",
+            fontsize=8,
+        )
 x_min = min(rapport_Rb_Sr)
 x_max = max(rapport_Rb_Sr)
 marge = (x_max - x_min) * 0.05
@@ -124,8 +134,6 @@ ax.text(
 )
 ax.set_xlabel("Rapport 87Rb/86Sr")
 ax.set_ylabel("Rapport 87Sr/86Sr")
-for index in range(len(rapport_Sr_Sr)):
-    ax.text(rapport_Rb_Sr[index], rapport_Sr_Sr[index], nom_echantillon[index], size=10)
 ax.set_title("Datation absolue par droite isochrone Rb-Sr")
 ax.legend(loc="lower right")
 st.pyplot(fig)

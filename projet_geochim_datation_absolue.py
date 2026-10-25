@@ -28,6 +28,7 @@ st.title("Datation absolue par isochrone Rb-Sr")
 
 Lambda = 1.42e-11  # constante de désintégration du Rb87 en Sr87 (an^-1)
 
+st.caption("Pour supprimer une ligne : coche la case à gauche, puis clique sur la corbeille (ou touche Suppr). Pour ajouter : clique sur + sous le tableau.")
 st.write(
     "Modifie les valeurs du tableau, ajoute ou supprime des lignes "
     "(un échantillon par ligne) : le graphique et l'âge se mettent à jour."

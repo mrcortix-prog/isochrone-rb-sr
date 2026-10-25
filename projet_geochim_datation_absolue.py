@@ -117,7 +117,7 @@ for x, y, nom in zip(
         ax.annotate(
             str(nom),
             (x, y),
-            xytext=(7, 4),
+            xytext=(7, 0),
             textcoords="offset points",
             fontsize=12,
         )

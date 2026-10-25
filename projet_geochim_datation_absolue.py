@@ -24,6 +24,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+st.set_page_config(layout="wide")
 st.title("Datation absolue par isochrone Rb-Sr")
 
 Lambda = 1.42e-11  # constante de désintégration du Rb87 en Sr87 (an^-1)
@@ -58,7 +59,7 @@ if "data" not in st.session_state:
 
 st.caption("Coche « Suppr. » sur les lignes à retirer, puis clique sur ❌. Clique sur ➕ pour ajouter une ligne.")
 
-col_tableau, col_graphique = st.columns(2, gap="large")
+col_tableau, col_graphique = st.columns([1, 1.6], gap="large")
 with col_tableau:
     edited = st.data_editor(
         st.session_state.data,
@@ -111,7 +112,7 @@ col2.metric("⁸⁷Sr/⁸⁶Sr initial", f"{B:.4f}")
 col3.metric("Âge", formater_age(t))
 
 # Graphique
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(10, 6))
 ax.scatter(rapport_Rb_Sr, rapport_Sr_Sr, marker="o", label="Données expérimentales")
 for x, y, nom in zip(
     df["87Rb/86Sr"],

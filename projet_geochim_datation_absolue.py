@@ -35,11 +35,43 @@ st.write(
 )
 
 # Tableau de départ (exemple), modifiable par l'utilisateur
-df0 = pd.DataFrame({
-    "87Rb/86Sr": [2.24, 3.642, 6.59, 0.2313, 3.628],  # axe horizontal
-    "87Sr/86Sr": [0.738, 0.7612, 0.7992, 0.7074, 0.7573],  # axe vertical
-})
-df = st.data_editor(df0, num_rows="dynamic")
+def exemple():
+    return pd.DataFrame({
+        "Suppr.": [False] * 5,
+        "87Rb/86Sr": [2.24, 3.642, 6.59, 0.2313, 3.628],
+        "87Sr/86Sr": [0.738, 0.7612, 0.7992, 0.7074, 0.7573],
+    })
+
+if "data" not in st.session_state:
+    st.session_state.data = exemple()
+    st.session_state.version = 0
+
+st.caption("Coche « Suppr. » sur les lignes à retirer, puis clique sur ❌. Clique sur ➕ pour ajouter une ligne.")
+
+edited = st.data_editor(
+    st.session_state.data,
+    num_rows="fixed",
+    hide_index=True,
+    key=f"editeur_{st.session_state.version}",
+)
+
+c1, c2, c3 = st.columns(3)
+if c1.button("➕ Ajouter"):
+    nouvelle = pd.DataFrame({"Suppr.": [False], "87Rb/86Sr": [np.nan], "87Sr/86Sr": [np.nan]})
+    st.session_state.data = pd.concat([edited, nouvelle], ignore_index=True)
+    st.session_state.version += 1
+    st.rerun()
+if c2.button("❌ Supprimer cochées"):
+    st.session_state.data = edited[~edited["Suppr."]].reset_index(drop=True)
+    st.session_state.version += 1
+    st.rerun()
+if c3.button("🗑️ Tout vider"):
+    st.session_state.data = edited.iloc[0:0]
+    st.session_state.version += 1
+    st.rerun()
+
+# On ne garde que les deux colonnes de rapports pour le calcul
+df = edited[["87Rb/86Sr", "87Sr/86Sr"]].dropna()
 
 # Garde-fous : on ignore les lignes incomplètes et on exige au moins 2 points
 df = df.dropna()

@@ -37,7 +37,7 @@ st.write(
 def exemple():
     return pd.DataFrame({
         "Suppr.": [False] * 5,
-        "Nom de l'écgantillon" : [str()] * 5,
+        "Nom de l'échantillon" : [str()] * 5,
         "87Rb/86Sr": [2.24, 3.642, 6.59, 0.2313, 3.628],
         "87Sr/86Sr": [0.738, 0.7612, 0.7992, 0.7074, 0.7573],
     })
@@ -89,6 +89,7 @@ if len(df) < 2:
     st.info("Ajoute au moins 2 points pour tracer l'isochrone.")
     st.stop()
 
+nom_echantillon = ["Nom de l'échantillon"]
 rapport_Rb_Sr = df["87Rb/86Sr"].to_numpy()
 rapport_Sr_Sr = df["87Sr/86Sr"].to_numpy()
 
@@ -124,7 +125,7 @@ ax.text(
 ax.set_xlabel("Rapport 87Rb/86Sr")
 ax.set_ylabel("Rapport 87Sr/86Sr")
 for index in range(len(rapport_Sr_Sr)):
-    ax.text(rapport_Rb_Sr[index], rapport_Sr_Sr[index], rapport_Sr_Sr[index], size=10)
+    ax.text(rapport_Rb_Sr[index], rapport_Sr_Sr[index], nom_echantillon[index], size=10)
 ax.set_title("Datation absolue par droite isochrone Rb-Sr")
 ax.legend(loc="lower right")
 st.pyplot(fig)

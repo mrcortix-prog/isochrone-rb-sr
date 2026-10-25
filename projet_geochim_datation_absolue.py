@@ -29,7 +29,6 @@ st.title("Datation absolue par isochrone Rb-Sr")
 Lambda = 1.42e-11  # constante de désintégration du Rb87 en Sr87 (an^-1)
 
 st.caption("Pour supprimer une ligne : coche la case à gauche, puis clique sur la corbeille (ou touche Suppr). Pour ajouter : clique sur + sous le tableau.")
-st.write(
     "Modifie les valeurs du tableau, ajoute ou supprime des lignes "
     "(un échantillon par ligne) : le graphique et l'âge se mettent à jour."
 )
@@ -42,6 +41,16 @@ def exemple():
         "87Sr/86Sr": [0.738, 0.7612, 0.7992, 0.7074, 0.7573],
     })
 
+# Fonction pour formater l'âge dans l'unité la plus adaptée
+def formater_age(t):
+    """Affiche l'âge dans l'unité la plus adaptée."""
+    if t >= 1e9:
+        return f"{t / 1e9:.2f} Ga"
+    elif t >= 1e6:
+        return f"{t / 1e6:.1f} Ma"
+    else:
+        return f"{t / 1e3:.1f} ka"
+    
 if "data" not in st.session_state:
     st.session_state.data = exemple()
     st.session_state.version = 0
@@ -91,9 +100,9 @@ t = np.log(1 + A) / Lambda  # âge en années
 
 # Résultats
 col1, col2, col3 = st.columns(3)
-col1.metric("Pente", f"{A:.5f}")
+col1.metric("Pente", f"{A:.3e}")
 col2.metric("⁸⁷Sr/⁸⁶Sr initial", f"{B:.4f}")
-col3.metric("Âge", f"{t / 1e9:.2f} Ga")
+col3.metric("Âge", formater_age(t))
 
 # Graphique
 fig, ax = plt.subplots()
@@ -102,7 +111,7 @@ xs = np.linspace(min(rapport_Rb_Sr), max(rapport_Rb_Sr), 100)
 ax.plot(xs, A * xs + B, "-", label="Droite de régression")
 ax.text(
     0.05, 0.95,
-    f"y = {A:.5f}x + {B:.4f}\nÂge = {t / 1e9:.2f} Ga",
+    f"y = {A:.3e}x + {B:.4f}\nÂge = {formater_age(t)}",
     transform=ax.transAxes,
     verticalalignment="top",
 )

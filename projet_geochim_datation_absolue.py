@@ -25,6 +25,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 st.set_page_config(layout="wide")
+st.set_page_config(page_title="Isochrone Rb-Sr", page_icon="🪨", layout="wide")
 st.title("Datation absolue par isochrone Rb-Sr")
 
 Lambda = 1.42e-11  # constante de désintégration du Rb87 en Sr87 (an^-1)
@@ -33,7 +34,8 @@ st.caption("Pour supprimer une ligne : coche la case à gauche, puis clique sur 
 st.write(
     "Modifie les valeurs du tableau, ajoute ou supprime des lignes \n(un échantillon par ligne) : le graphique et l'âge se mettent à jour."
 )
-
+st.expander("Comment ca marche ?")
+st.latex (r"t = \frac{1}{\lambda}\ln(1+a)")
 # Tableau de départ (exemple), modifiable par l'utilisateur
 def exemple():
     return pd.DataFrame({
@@ -74,10 +76,10 @@ with col_tableau:
         st.session_state.version += 1
         st.rerun()
     if c2.button("➕ Ajouter"):
-            nouvelle = pd.DataFrame({"Suppr.": [False], "87Rb/86Sr": [np.nan], "87Sr/86Sr": [np.nan]})
-            st.session_state.data = pd.concat([edited, nouvelle], ignore_index=True)
-            st.session_state.version += 1
-            st.rerun()
+        nouvelle = pd.DataFrame({"Suppr.": [False], "87Rb/86Sr": [np.nan], "87Sr/86Sr": [np.nan]})
+        st.session_state.data = pd.concat([edited, nouvelle], ignore_index=True)
+        st.session_state.version += 1
+        st.rerun()
     if c3.button("🗑️ Tout vider"):
         st.session_state.data = edited.iloc[0:0]
         st.session_state.version += 1

@@ -68,20 +68,20 @@ with col_tableau:
         key=f"editeur_{st.session_state.version}",
     )
 
-c1, c2, c3 = st.columns(3)
-if c1.button("➕ Ajouter"):
-    nouvelle = pd.DataFrame({"Suppr.": [False], "87Rb/86Sr": [np.nan], "87Sr/86Sr": [np.nan]})
-    st.session_state.data = pd.concat([edited, nouvelle], ignore_index=True)
-    st.session_state.version += 1
-    st.rerun()
-if c2.button("❌ Supprimer cochées"):
-    st.session_state.data = edited[~edited["Suppr."]].reset_index(drop=True)
-    st.session_state.version += 1
-    st.rerun()
-if c3.button("🗑️ Tout vider"):
-    st.session_state.data = edited.iloc[0:0]
-    st.session_state.version += 1
-    st.rerun()
+    c1, c2, c3 = st.columns(3)
+    if c1.button("➕ Ajouter"):
+        nouvelle = pd.DataFrame({"Suppr.": [False], "87Rb/86Sr": [np.nan], "87Sr/86Sr": [np.nan]})
+        st.session_state.data = pd.concat([edited, nouvelle], ignore_index=True)
+        st.session_state.version += 1
+        st.rerun()
+    if c2.button("❌ Supprimer cochées"):
+        st.session_state.data = edited[~edited["Suppr."]].reset_index(drop=True)
+        st.session_state.version += 1
+        st.rerun()
+    if c3.button("🗑️ Tout vider"):
+        st.session_state.data = edited.iloc[0:0]
+        st.session_state.version += 1
+        st.rerun()
 
 # On ne garde que les deux colonnes de rapports pour le calcul
 df = edited[["87Rb/86Sr", "87Sr/86Sr"]].dropna()
@@ -104,12 +104,6 @@ if A <= 0:
     st.warning("La pente est négative ou nulle : vérifie tes données, l'âge n'a pas de sens.")
     st.stop()
 t = np.log(1 + A) / Lambda  # âge en années
-
-# Résultats
-col1, col2, col3 = st.columns(3)
-col1.metric("Pente", f"{A:.5f}")
-col2.metric("⁸⁷Sr/⁸⁶Sr initial", f"{B:.4f}")
-col3.metric("Âge", formater_age(t))
 
 # Graphique
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -144,4 +138,9 @@ ax.set_xlabel("Rapport 87Rb/86Sr")
 ax.set_ylabel("Rapport 87Sr/86Sr")
 ax.set_title("Datation absolue par droite isochrone Rb-Sr")
 ax.legend(loc="lower right")
-col_graphique.pyplot(fig, use_container_width=True)
+with col_graphique:
+    st.pyplot(fig, use_container_width=True)
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Pente", f"{A:.5f}")
+    col2.metric("⁸⁷Sr/⁸⁶Sr initial", f"{B:.4f}")
+    col3.metric("Âge", formater_age(t))

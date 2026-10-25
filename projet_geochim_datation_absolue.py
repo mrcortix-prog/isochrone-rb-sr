@@ -123,6 +123,8 @@ ax.text(
 )
 ax.set_xlabel("Rapport 87Rb/86Sr")
 ax.set_ylabel("Rapport 87Sr/86Sr")
+for index in range(len(rapport_Sr_Sr)):
+    ax.text(rapport_Rb_Sr[index], rapport_Sr_Sr[index], rapport_Sr_Sr[index], size=10)
 ax.set_title("Datation absolue par droite isochrone Rb-Sr")
 ax.legend(loc="lower right")
 st.pyplot(fig)

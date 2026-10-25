@@ -38,7 +38,7 @@ st.write(
 def exemple():
     return pd.DataFrame({
         "Suppr.": [False] * 5,
-        "Nom de l'échantillon" : [n1, n2, n3, n4, n5] * 5,
+        "Nom de l'échantillon" : [str(n1), str(n2), str(n3), str(n4), str(n5)] * 5,
         "87Rb/86Sr": [2.24, 3.642, 6.59, 0.2313, 3.628],
         "87Sr/86Sr": [0.738, 0.7612, 0.7992, 0.7074, 0.7573],
     })

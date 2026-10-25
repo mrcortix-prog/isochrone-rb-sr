@@ -89,7 +89,7 @@ if len(df) < 2:
     st.info("Ajoute au moins 2 points pour tracer l'isochrone.")
     st.stop()
 
-df = edited[["nom_echantillon", "87Rb/86Sr", "87Sr/86Sr"]]
+df = edited[["Nom de l'échantillon", "87Rb/86Sr", "87Sr/86Sr"]]
 df = df.dropna(subset=["87Rb/86Sr", "87Sr/86Sr"])
 rapport_Rb_Sr = df["87Rb/86Sr"].to_numpy()
 rapport_Sr_Sr = df["87Sr/86Sr"].to_numpy()
@@ -110,7 +110,11 @@ col3.metric("Âge", formater_age(t))
 # Graphique
 fig, ax = plt.subplots()
 ax.scatter(rapport_Rb_Sr, rapport_Sr_Sr, marker="o", label="Données expérimentales")
-for x, y, nom in zip(df["87Rb/86Sr"], df["87Sr/86Sr"], df["nom_echantillon"]):
+for x, y, nom in zip(
+    df["87Rb/86Sr"],
+    df["87Sr/86Sr"],
+    df["Nom de l'échantillon"],
+):
     if pd.notna(nom) and str(nom).strip():
         ax.annotate(
             str(nom),

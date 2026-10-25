@@ -31,10 +31,36 @@ st.title("Datation absolue par isochrone Rb-Sr")
 Lambda = 1.42e-11  # constante de désintégration du Rb87 en Sr87 (an^-1)
 
 st.caption("Pour supprimer une ligne : coche la case à gauche, puis clique sur la corbeille (ou touche Suppr). Pour ajouter : clique sur + sous le tableau.")
-st.write(
-    "Modifie les valeurs du tableau, ajoute ou supprime des lignes \n(un échantillon par ligne) : le graphique et l'âge se mettent à jour."
-)
-st.expander("Comment ca marche ?" st.latex(r"t = \frac{1}{\lambda}\ln(1+a)"))
+with st.expander("Comment ça marche ?"):
+    st.markdown("""
+    **Le principe.** Certains minéraux contiennent du rubidium-87 (⁸⁷Rb), un atome
+    radioactif qui se transforme lentement en strontium-87 (⁸⁷Sr). Cette transformation
+    est très lente (demi-vie d'environ 49 milliards d'années) mais régulière : plus une
+    roche est ancienne, plus elle contient de ⁸⁷Sr issu de cette désintégration.
+
+    **Pourquoi un rapport avec le ⁸⁶Sr ?** Le ⁸⁶Sr est stable : sa quantité ne change
+    pas avec le temps. On s'en sert comme référence, en mesurant les rapports
+    ⁸⁷Rb/⁸⁶Sr et ⁸⁷Sr/⁸⁶Sr.
+
+    **L'isochrone.** Des roches ou des minéraux formés en même temps, à partir du même
+    magma, démarrent avec le même ⁸⁷Sr/⁸⁶Sr mais avec des quantités de Rb différentes.
+    Avec le temps, ceux qui contiennent le plus de Rb produisent le plus de ⁸⁷Sr : leurs
+    points s'alignent sur une droite, l'**isochrone**.
+    - la **pente** de la droite dépend de l'âge ;
+    - l'**ordonnée à l'origine** donne le rapport ⁸⁷Sr/⁸⁶Sr initial.
+    """)
+    st.latex(r"t = \frac{1}{\lambda}\ln(1+a)")
+    st.markdown("""
+    où *t* est l'âge, *a* la pente de la droite et *λ* la constante de désintégration
+    du ⁸⁷Rb : 1,42 × 10⁻¹¹ an⁻¹ (valeur recommandée par Steiger et Jäger, 1977).
+
+    **Limites.** La méthode suppose que les échantillons ont le même âge et le même
+    ⁸⁷Sr/⁸⁶Sr initial, et que le système est resté fermé (ni gain ni perte de Rb ou de Sr).
+    Si les points ne s'alignent pas bien, la roche a peut-être été perturbée
+    (métamorphisme, altération).
+    """)
+with st.expander("Comment ca marche ?"):
+    st.write("")
 # Tableau de départ (exemple), modifiable par l'utilisateur
 def exemple():
     return pd.DataFrame({

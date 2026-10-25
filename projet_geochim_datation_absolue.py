@@ -40,7 +40,7 @@ with st.expander("Comment ça marche ?"):
 
     Des minéraux formés au même moment peuvent contenir des quantités différentes de ⁸⁷Rb.
     Avec le temps, ils produisent donc des quantités différentes de ⁸⁷Sr.  
-    En comparant leurs rapports isotopiques, on obtient des points qui forment une droite appelée **isochrone**.
+    En comparant leurs rapports isotopiques, on obtient des points qui forment une droite appelée **isochrone**.  
     **Pourquoi un rapport avec le ⁸⁶Sr ?** Le ⁸⁶Sr est stable : sa quantité ne change
     pas avec le temps. On s'en sert comme référence, en mesurant les rapports
     ⁸⁷Rb/⁸⁶Sr et ⁸⁷Sr/⁸⁶Sr.

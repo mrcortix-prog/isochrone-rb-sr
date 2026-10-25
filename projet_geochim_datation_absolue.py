@@ -33,31 +33,25 @@ Lambda = 1.42e-11  # constante de désintégration du Rb87 en Sr87 (an^-1)
 st.caption("Pour supprimer une ligne : coche la case à gauche, puis clique sur la corbeille (ou touche Suppr). Pour ajouter : clique sur + sous le tableau.")
 with st.expander("Comment ça marche ?"):
     st.markdown("""
-    **Le principe.** Certains minéraux contiennent du rubidium-87 (⁸⁷Rb), un atome
-    radioactif qui se transforme lentement en strontium-87 (⁸⁷Sr). Cette transformation
-    est très lente (demi-vie d'environ 49 milliards d'années) mais régulière : plus une
-    roche est ancienne, plus elle contient de ⁸⁷Sr issu de cette désintégration.
+    Le **rubidium-87 (⁸⁷Rb)** se transforme lentement en **strontium-87 (⁸⁷Sr)**.
+    Le **strontium-86 (⁸⁶Sr)**, lui, reste stable et sert de référence pour les mesures.
 
-    **Pourquoi un rapport avec le ⁸⁶Sr ?** Le ⁸⁶Sr est stable : sa quantité ne change
-    pas avec le temps. On s'en sert comme référence, en mesurant les rapports
-    ⁸⁷Rb/⁸⁶Sr et ⁸⁷Sr/⁸⁶Sr.
+    Des minéraux formés au même moment peuvent contenir des quantités différentes de ⁸⁷Rb.
+    Avec le temps, ils produisent donc des quantités différentes de ⁸⁷Sr. En comparant leurs
+    rapports isotopiques, on obtient des points qui forment une droite appelée **isochrone**.
 
-    **L'isochrone.** Des roches ou des minéraux formés en même temps, à partir du même
-    magma, démarrent avec le même ⁸⁷Sr/⁸⁶Sr mais avec des quantités de Rb différentes.
-    Avec le temps, ceux qui contiennent le plus de Rb produisent le plus de ⁸⁷Sr : leurs
-    points s'alignent sur une droite, l'**isochrone**.
-    - la **pente** de la droite dépend de l'âge ;
-    - l'**ordonnée à l'origine** donne le rapport ⁸⁷Sr/⁸⁶Sr initial.
+    Sa **pente** permet d’estimer l’âge, et son **ordonnée à l’origine** indique le rapport
+    initial en ⁸⁷Sr/⁸⁶Sr.
+
+    La méthode suppose que les échantillons ont le même âge, qu’ils avaient le même rapport
+    initial et qu’ils n’ont pas échangé de rubidium ou de strontium avec leur environnement.
     """)
-    st.latex(r"t = \frac{1}{\lambda}\ln(1+a)")
-    st.markdown("""
-    où *t* est l'âge, *a* la pente de la droite et *λ* la constante de désintégration
-    du ⁸⁷Rb : 1,42 × 10⁻¹¹ an⁻¹ (valeur recommandée par Steiger et Jäger, 1977).
 
-    **Limites.** La méthode suppose que les échantillons ont le même âge et le même
-    ⁸⁷Sr/⁸⁶Sr initial, et que le système est resté fermé (ni gain ni perte de Rb ou de Sr).
-    Si les points ne s'alignent pas bien, la roche a peut-être été perturbée
-    (métamorphisme, altération).
+    st.latex(r"t = \frac{1}{\lambda}\ln(1+a)")
+
+    st.markdown("""
+    *t* est l’âge, *a* la pente de la droite et *λ* la constante de désintégration
+    du ⁸⁷Rb (**1,42 × 10⁻¹¹ an⁻¹**).
     """)
 
 # Tableau de départ (exemple), modifiable par l'utilisateur

@@ -125,7 +125,7 @@ for x, y, nom in zip(
             (x, y),
             xytext=(5, 5),
             textcoords="offset points",
-            fontsize=8,
+            fontsize=12,
         )
 x_min = min(rapport_Rb_Sr)
 x_max = max(rapport_Rb_Sr)

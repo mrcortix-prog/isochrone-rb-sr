@@ -39,11 +39,13 @@ with st.expander("Comment ça marche ?"):
     roche est ancienne, plus elle contient de ⁸⁷Sr issu de cette désintégration.
 
     Des minéraux formés au même moment peuvent contenir des quantités différentes de ⁸⁷Rb.
-    Avec le temps, ils produisent donc des quantités différentes de ⁸⁷Sr.  
-    En comparant leurs rapports isotopiques, on obtient des points qui forment une droite appelée **isochrone**.  
-    **Pourquoi un rapport avec le ⁸⁶Sr ?** Le ⁸⁶Sr est stable : sa quantité ne change
-    pas avec le temps. On s'en sert comme référence, en mesurant les rapports
-    ⁸⁷Rb/⁸⁶Sr et ⁸⁷Sr/⁸⁶Sr.
+    Avec le temps, ils produisent donc des quantités différentes de ⁸⁷Sr.
+
+    Pour pouvoir les comparer, on prend le ⁸⁶Sr comme référence : cet isotope est stable,
+    sa quantité ne change pas avec le temps. On mesure ainsi, pour chaque échantillon, les
+    rapports ⁸⁷Rb/⁸⁶Sr et ⁸⁷Sr/⁸⁶Sr.
+
+    En reportant ces rapports sur un graphique, les points forment une droite appelée **isochrone**.
 
     - la **pente** de la droite dépend de l'âge.
     - l'**ordonnée à l'origine** donne le rapport ⁸⁷Sr/⁸⁶Sr initial.

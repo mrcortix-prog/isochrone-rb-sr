@@ -34,8 +34,7 @@ st.caption("Pour supprimer une ligne : coche la case à gauche, puis clique sur 
 st.write(
     "Modifie les valeurs du tableau, ajoute ou supprime des lignes \n(un échantillon par ligne) : le graphique et l'âge se mettent à jour."
 )
-st.expander("Comment ca marche ?")
-st.latex (r"t = \frac{1}{\lambda}\ln(1+a)")
+st.expander("Comment ca marche ?" st.latex(r"t = \frac{1}{\lambda}\ln(1+a)"))
 # Tableau de départ (exemple), modifiable par l'utilisateur
 def exemple():
     return pd.DataFrame({

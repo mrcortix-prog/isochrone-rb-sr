@@ -107,7 +107,12 @@ col3.metric("Âge", formater_age(t))
 # Graphique
 fig, ax = plt.subplots()
 ax.scatter(rapport_Rb_Sr, rapport_Sr_Sr, marker="o", label="Données expérimentales")
-xs = np.linspace(min(rapport_Rb_Sr), max(rapport_Rb_Sr), 100)
+x_min = min(rapport_Rb_Sr)
+x_max = max(rapport_Rb_Sr)
+marge = (x_max - x_min) * 0.05
+
+ax.set_xlim(x_min - marge, x_max + marge)
+xs = np.linspace(*ax.get_xlim(), 100)
 ax.plot(xs, A * xs + B, "-", label="Droite de régression")
 ax.text(
     0.05, 0.95,
@@ -115,7 +120,6 @@ ax.text(
     transform=ax.transAxes,
     verticalalignment="top",
 )
-ax.axline(xy1=(rapport_Rb_Sr[0], rapport_Sr_Sr[0]), xy2=(rapport_Rb_Sr[-1], rapport_Sr_Sr[-1]), color='b')
 ax.set_xlabel("Rapport 87Rb/86Sr")
 ax.set_ylabel("Rapport 87Sr/86Sr")
 ax.set_title("Datation absolue par droite isochrone Rb-Sr")

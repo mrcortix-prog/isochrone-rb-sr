@@ -115,6 +115,7 @@ ax.text(
     transform=ax.transAxes,
     verticalalignment="top",
 )
+ax.axline(xy1=(rapport_Rb_Sr[0], rapport_Sr_Sr[0]), xy2=(rapport_Rb_Sr[-1], rapport_Sr_Sr[-1]), color='b')
 ax.set_xlabel("Rapport 87Rb/86Sr")
 ax.set_ylabel("Rapport 87Sr/86Sr")
 ax.set_title("Datation absolue par droite isochrone Rb-Sr")

@@ -29,8 +29,8 @@ st.title("Datation absolue par isochrone Rb-Sr")
 Lambda = 1.42e-11  # constante de désintégration du Rb87 en Sr87 (an^-1)
 
 st.caption("Pour supprimer une ligne : coche la case à gauche, puis clique sur la corbeille (ou touche Suppr). Pour ajouter : clique sur + sous le tableau.")
-    "Modifie les valeurs du tableau, ajoute ou supprime des lignes "
-    "(un échantillon par ligne) : le graphique et l'âge se mettent à jour."
+st.write(
+    "Modifie les valeurs du tableau, ajoute ou supprime des lignes \n(un échantillon par ligne) : le graphique et l'âge se mettent à jour."
 )
 
 # Tableau de départ (exemple), modifiable par l'utilisateur
@@ -100,7 +100,7 @@ t = np.log(1 + A) / Lambda  # âge en années
 
 # Résultats
 col1, col2, col3 = st.columns(3)
-col1.metric("Pente", f"{A:.3e}")
+col1.metric("Pente", f"{A:.5f}")
 col2.metric("⁸⁷Sr/⁸⁶Sr initial", f"{B:.4f}")
 col3.metric("Âge", formater_age(t))
 

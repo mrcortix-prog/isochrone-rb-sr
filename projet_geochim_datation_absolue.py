@@ -58,12 +58,14 @@ if "data" not in st.session_state:
 
 st.caption("Coche « Suppr. » sur les lignes à retirer, puis clique sur ❌. Clique sur ➕ pour ajouter une ligne.")
 
-edited = st.data_editor(
-    st.session_state.data,
-    num_rows="fixed",
-    hide_index=True,
-    key=f"editeur_{st.session_state.version}",
-)
+col_tableau, col_graphique = st.columns(2, gap="large")
+with col_tableau:
+    edited = st.data_editor(
+        st.session_state.data,
+        num_rows="fixed",
+        hide_index=True,
+        key=f"editeur_{st.session_state.version}",
+    )
 
 c1, c2, c3 = st.columns(3)
 if c1.button("➕ Ajouter"):
@@ -91,6 +93,7 @@ if len(df) < 2:
 
 df = edited[["Nom de l'échantillon", "87Rb/86Sr", "87Sr/86Sr"]]
 df = df.dropna(subset=["87Rb/86Sr", "87Sr/86Sr"])
+
 rapport_Rb_Sr = df["87Rb/86Sr"].to_numpy()
 rapport_Sr_Sr = df["87Sr/86Sr"].to_numpy()
 
@@ -140,4 +143,4 @@ ax.set_xlabel("Rapport 87Rb/86Sr")
 ax.set_ylabel("Rapport 87Sr/86Sr")
 ax.set_title("Datation absolue par droite isochrone Rb-Sr")
 ax.legend(loc="lower right")
-st.pyplot(fig)
+col_graphique.pyplot(fig, use_container_width=True)

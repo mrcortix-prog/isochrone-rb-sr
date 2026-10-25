@@ -69,7 +69,7 @@ with col_tableau:
     )
 
     c1, c2, c3 = st.columns(3)
-    if c1.button("❌ Supprimer cochées"):
+    if c1.button("❌ Supprimer \n cochées"):
         st.session_state.data = edited[~edited["Suppr."]].reset_index(drop=True)
         st.session_state.version += 1
         st.rerun()

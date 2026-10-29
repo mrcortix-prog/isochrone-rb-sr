@@ -1,4 +1,6 @@
-"""import matplotlib.pyplot as plt
+"""----------------------------------------PARTIE PYTHON----------------------------------------
+
+import matplotlib.pyplot as plt
 import numpy as np
 
 rapport_Rb_Sr = [2.24, 3.642, 6.59, 0.2313, 3.628] #axe horizontal
@@ -19,6 +21,9 @@ plt.title("Datation absolue par droite de isochrone Rb-Sr")
 plt.grid(False)
 plt.show()"""
 
+
+
+"""----------------------------------------PARTIE PYTHON + STREAMLIT----------------------------------------"""
 import streamlit as st
 import pandas as pd
 import numpy as np

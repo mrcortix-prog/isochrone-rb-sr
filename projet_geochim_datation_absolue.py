@@ -1,29 +1,29 @@
-"""----------------------------------------PARTIE PYTHON----------------------------------------
+#----------------------------------------PARTIE PYTHON----------------------------------------
 
-import matplotlib.pyplot as plt
-import numpy as np
+#import matplotlib.pyplot as plt 
+#import numpy as np
 
-rapport_Rb_Sr = [2.24, 3.642, 6.59, 0.2313, 3.628] #axe horizontal
-rapport_Sr_Sr = [0.738, 0.7612, 0.7992, 0.7074, 0.7573] #axe vertical
+#rapport_Rb_Sr = [2.24, 3.642, 6.59, 0.2313, 3.628] #axe horizontal                                                              <- j'ai repris les données du dm de géochimie de L2, pour vérifier la véracité de mes résultats 
+#rapport_Sr_Sr = [0.738, 0.7612, 0.7992, 0.7074, 0.7573] #axe vertical
 
-Lambda = 1.42e-11 #constante de désintégration du Rb87 en Sr87
+#Lambda = 1.42e-11                                                                                                               <- constante de désintégration du Rb87 en Sr87
 
-A, B = np.polyfit(rapport_Rb_Sr, rapport_Sr_Sr, 1) #calcul de la pente et de l'ordonnée à l'origine de la droite de régression
-t = (np.log(1 + A) / Lambda) #calcul du temps grace a la pente et au lambda
-y_reg = A * np.array(rapport_Rb_Sr) + B #calcul des valeurs de y pour la droite de régression
+#A, B = np.polyfit(rapport_Rb_Sr, rapport_Sr_Sr, 1)                                                                              <- calcul de la pente et de l'ordonnée à l'origine de la droite de régression
+#t = (np.log(1 + A) / Lambda)                                                                                                    <- calcul du temps grâce à la pente et au lambda
+#y_reg = A * np.array(rapport_Rb_Sr) + B                                                                                         <- calcul des valeurs de y pour la droite de régression
 
-plt.scatter(rapport_Rb_Sr, rapport_Sr_Sr, marker='o', label='Données expérimentales') #affichage des points expérimentaux
-plt.plot(rapport_Rb_Sr, y_reg, '-', label='Droite de régression') #affichage de la droite de régression
-plt.text(0.05, 0.95, f"y = {A:.5f}x + {B:.4f}\n Âge = {t/1e9:.2f} Ga", transform=plt.gca().transAxes, verticalalignment="top")
-plt.xlabel("Rapport 87Rb/86Sr")
-plt.ylabel("Rapport 87Sr/86Sr")
-plt.title("Datation absolue par droite de isochrone Rb-Sr")
-plt.grid(False)
-plt.show()"""
+#plt.scatter(rapport_Rb_Sr, rapport_Sr_Sr, marker='o', label='Données expérimentales')                                           <- affichage des points expérimentaux
+#plt.plot(rapport_Rb_Sr, y_reg, '-', label='Droite de régression')                                                               <- affichage de la droite de régression
+#plt.text(0.05, 0.95, f"y = {A:.5f}x + {B:.4f}\n Âge = {t/1e9:.2f} Ga", transform=plt.gca().transAxes, verticalalignment="top")  <- affichage de la formule de la droite de régression
+#plt.xlabel("Rapport 87Rb/86Sr")                                                                                                 <- légende de l'axe horizontal
+#plt.ylabel("Rapport 87Sr/86Sr")                                                                                                 <- légende de l'axe vertical
+#plt.title("Datation absolue par droite isochrone Rb-Sr")                                                                        <- titre du graphique
+#plt.grid(False) 
+#plt.show()
 
 
 
-"""----------------------------------------PARTIE PYTHON + STREAMLIT----------------------------------------"""
+#----------------------------------------PARTIE PYTHON + STREAMLIT----------------------------------------
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -99,7 +99,7 @@ with col_tableau:
         hide_index=True,
         key=f"editeur_{st.session_state.version}",
     )
-
+# Permet d'ajouter, supprimer et tout vider dans le tableau des valeurs
     c1, c2, c3 = st.columns(3)
     if c1.button("❌ Supprimer  \ncochées"):
         st.session_state.data = edited[~edited["Suppr."]].reset_index(drop=True)
@@ -130,7 +130,7 @@ df = df.dropna(subset=["87Rb/86Sr", "87Sr/86Sr"])
 rapport_Rb_Sr = df["87Rb/86Sr"].to_numpy()
 rapport_Sr_Sr = df["87Sr/86Sr"].to_numpy()
 
-# Calculs (identiques à ton script)
+# Calcul de la pente, de l’ordonnée à l’origine et de l’âge (repris du script Python initial)
 A, B = np.polyfit(rapport_Rb_Sr, rapport_Sr_Sr, 1)  # pente et ordonnée à l'origine
 if A <= 0:
     st.warning("La pente est négative ou nulle : vérifie tes données, l'âge n'a pas de sens.")
@@ -166,6 +166,7 @@ ax.text(
     transform=ax.transAxes,
     verticalalignment="top",
 )
+# Partie qui affiche les infos sur le graphique (nom des axes (en x et en y), titre, coefficient directeur, rapport 87Sr/86Sr initial et l'âge)
 ax.set_xlabel("Rapport 87Rb/86Sr")
 ax.set_ylabel("Rapport 87Sr/86Sr")
 ax.set_title("Datation absolue par droite isochrone Rb-Sr")
